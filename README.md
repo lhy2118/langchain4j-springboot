@@ -1,4 +1,4 @@
-# MCP智能服务平台
+springboot+langchain4j
 
 ## 项目简介
 
