@@ -1,0 +1,2 @@
+# langchain4j-springboot
+使用langchain4j+springboot框架实现mcp服务
