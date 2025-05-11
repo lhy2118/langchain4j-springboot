@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文木亘禹 AI 聊天助手 - 部署页面</title>
+    <style>
+        :root {
+            --primary-color: #00ffff;
+            --secondary-color: #1a1a2a;
+            --text-color: #e0e0e0;
+            --border-color: rgba(0, 255, 255, 0.3);
+        }
+
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', sans-serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--text-color);
+            background: linear-gradient(-45deg, #0a0a1a, #1a0f3a, #0f2b3d, #1a1a2a);
+            background-size: 400% 400%;
+            animation: gradientAnimation 15s ease infinite;
+        }
+
+        .container {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(26, 26, 42, 0.7);
+            border-radius: 15px;
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            max-width: 600px;
+            width: 90%;
+        }
+
+        h1 {
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+        }
+
+        p {
+            margin: 1rem 0;
+            line-height: 1.6;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 1rem 2rem;
+            margin: 1rem;
+            background: linear-gradient(45deg, #3d5afe, #30cfd0);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 255, 255, 0.4);
+        }
+
+        .features {
+            text-align: left;
+            margin: 2rem 0;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+        }
+
+        .features h2 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .features ul {
+            margin: 0;
+            padding-left: 1.5rem;
+        }
+
+        .features li {
+            margin: 0.5rem 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>文木亘禹 AI 聊天助手</h1>
+        <p>基于 Spring Boot 和 LangChain4j 的智能聊天系统</p>
+        
+        <div class="features">
+            <h2>主要特点</h2>
+            <ul>
+                <li>多种聊天模式支持</li>
+                <li>现代化响应式界面</li>
+                <li>智能会话管理</li>
+                <li>数据持久化存储</li>
+                <li>向量检索与文档问答</li>
+            </ul>
+        </div>
+
+        <p>立即部署并开始使用这个强大的 AI 聊天助手！</p>
+        <a href="https://github.com/yourusername/your-repo" class="button">
+            <i class="fab fa-github"></i> 查看部署文档
+        </a>
+    </div>
+</body>
+</html> 

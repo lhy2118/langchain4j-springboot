@@ -1,0 +1,14 @@
+[Unit]
+Description=Springboot-langchain4j Application
+After=network.target
+
+[Service]
+User=root
+WorkingDirectory=/opt/Springboot-langchain4j
+ExecStart=/usr/bin/java -jar Springboot-langchain4j-0.0.1-SNAPSHOT.jar
+SuccessExitStatus=143
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target 

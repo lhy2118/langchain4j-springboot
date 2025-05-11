@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文木亘禹 聊天助手 </title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="icon" type="image/png" href="/AI-02.png">
+</head>
+<title>登录</title>
+<body>
+<div class="app-container">
+    <header>
+        <h1><i class="fas fa-robot"></i> <span>文木亘禹 聊天助手</span></h1>
+    </header>
+
+    <div class="chat-container">
+        <div class="sidebar">
+            <div class="chat-mode-selector">
+                <h3><i class="fas fa-cog"></i> 聊天模式</h3>
+                <select id="chatMode">
+                    <option value="stream">流式聊天</option>
+                    <option value="normal">普通聊天</option>
+                    <option value="memory">带记忆聊天</option>
+                    <option value="streamMemory">流式带记忆聊天</option>
+                    <option value="memoryId">会话隔离聊天</option>
+                    <option value="streamMemoryId">流式会话隔离聊天</option>
+                    <option value="streamMemoryIdSql">流式会话隔离聊天(SQL存储)</option>
+                    <!-- Added Image Chat Option -->
+                    <option value="imageChat">图像生成</option>
+                </select>
+            </div>
+
+            <div id="conversationIdContainer" class="hidden">
+                <h3><i class="fas fa-id-card"></i> 会话ID</h3>
+                <input type="number" id="conversationIdInput" min="1" value="1">
+            </div>
+
+            <div class="conversations">
+                <h3><i class="fas fa-history"></i> 历史会话</h3>
+                <button id="newChat" type="button"><i class="fas fa-plus"></i> 新建会话</button>
+                <ul id="conversationsList">
+                    <!-- History items here -->
+                </ul>
+            </div>
+        </div>
+
+        <div class="chat-main">
+            <div id="chatMessages" class="chat-messages">
+                <div class="message system">
+                    <div class="message-content">
+                        <p>欢迎使用 文木亘禹 聊天助手。连接未来，开始对话。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chat-input-container">
+                <textarea id="userInput" placeholder="输入文本或图像生成提示..." rows="3"></textarea>
+                <button id="sendBtn" type="button">
+                    <i class="fas fa-paper-plane"></i> 发送
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/js/1.js"></script>
+</body>
+</html>

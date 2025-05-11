@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lhy.springbootlangchain4j.mapper.UserMapper">
+
+    <resultMap id="UserResultMap" type="com.lhy.springbootlangchain4j.pojo.User">
+        <id property="id" column="id"/>
+        <result property="account" column="account"/>
+        <result property="password" column="password"/> <!-- 映射数据库 password (明文) 列 -->
+        <result property="name" column="name"/>
+    </resultMap>
+
+    <select id="findByAccount" resultMap="UserResultMap">
+        SELECT
+            id, account, password, name
+        FROM
+            user
+        WHERE
+            account = #{account}
+    </select>
+
+</mapper>

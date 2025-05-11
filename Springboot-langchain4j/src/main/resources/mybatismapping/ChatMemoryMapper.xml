@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lhy.springbootlangchain4j.mapper.ChatMemoryMapper">
+
+    <resultMap id="chatMemoryResultMap" type="com.lhy.springbootlangchain4j.pojo.ChatMemoryEntity">
+        <id property="id" column="id"/> <!-- 主键映射 -->
+        <result property="memoryId" column="memory_id"/>
+        <result property="messagesJson" column="messages_json"/>
+        <result property="lastUpdated" column="last_updated"/>
+    </resultMap>
+    <!-- 查询 messages_json -->
+    <select id="findEntityById" resultMap="chatMemoryResultMap">
+        SELECT messages_json
+        FROM chat_memory
+        WHERE memory_id = #{memoryId}
+    </select>
+
+    <!-- 插入或更新 -->
+    <insert id="upsertMessages">
+        INSERT INTO chat_memory (memory_id, messages_json)
+        VALUES (#{memoryId}, #{messagesJson})
+            ON DUPLICATE KEY UPDATE messages_json = VALUES(messages_json)
+    </insert>
+
+    <!-- 删除 -->
+    <delete id="deleteById">
+        DELETE FROM chat_memory
+        WHERE memory_id = #{memoryId}
+    </delete>
+
+</mapper>

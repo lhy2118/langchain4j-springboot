@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>系统登录</title>
+    <link rel="icon" type="image/png" href="/AI-02.png">
+    <style>
+        /* --- Global Styles & Resets --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --primary-color: #00ffff;
+            --secondary-color: #1a1a2a;
+            --text-color: #e0e0e0;
+            --border-color: rgba(0, 255, 255, 0.3);
+            --hover-color: #00bfff;
+            --success-color: #00ff9d;
+            --error-color: #ff3366;
+            --background-start: #0a0a1a;
+            --background-end: #1a0f3a;
+        }
+
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes floatAnimation {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+
+        @keyframes glowPulse {
+            0% { opacity: 0.4; filter: blur(3px); }
+            50% { opacity: 0.8; filter: blur(5px); }
+            100% { opacity: 0.4; filter: blur(3px); }
+        }
+
+        @keyframes rotateAnimation {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', sans-serif;
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            /* Animated Gradient Background */
+            background: linear-gradient(-45deg, var(--background-start), var(--background-end), #0f2b3d, #1a1a2a);
+            background-size: 400% 400%;
+            animation: gradientAnimation 15s ease infinite;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* --- Decorative Elements --- */
+        .particles-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            background: var(--primary-color);
+            border-radius: 50%;
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        .grid-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                    linear-gradient(rgba(0, 255, 255, 0.05) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(0, 255, 255, 0.05) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: -1;
+        }
+
+        .decorative-circle {
+            position: absolute;
+            border: 2px solid rgba(0, 255, 255, 0.15);
+            border-radius: 50%;
+            z-index: -1;
+        }
+
+        .decorative-circle:nth-child(1) {
+            width: 300px;
+            height: 300px;
+            top: -150px;
+            left: -100px;
+            border-width: 4px;
+            animation: rotateAnimation 40s linear infinite;
+        }
+
+        .decorative-circle:nth-child(2) {
+            width: 200px;
+            height: 200px;
+            bottom: -50px;
+            right: -50px;
+            border-width: 3px;
+            animation: rotateAnimation 30s linear infinite reverse;
+        }
+
+        .hexagon {
+            position: absolute;
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            background: rgba(0, 255, 255, 0.1);
+            z-index: -1;
+        }
+
+        .hexagon:nth-child(1) {
+            width: 150px;
+            height: 173px;
+            top: 15%;
+            left: 10%;
+            animation: floatAnimation 8s ease-in-out infinite;
+        }
+
+        .hexagon:nth-child(2) {
+            width: 100px;
+            height: 115px;
+            bottom: 15%;
+            right: 10%;
+            animation: floatAnimation 6s ease-in-out infinite;
+        }
+
+        .light-beam {
+            position: absolute;
+            width: 150px;
+            height: 400px;
+            background: radial-gradient(ellipse at center, rgba(0, 255, 255, 0.2) 0%, rgba(0, 255, 255, 0) 70%);
+            border-radius: 50%;
+            filter: blur(10px);
+            transform: rotate(45deg);
+            z-index: -1;
+            animation: glowPulse 5s infinite;
+        }
+
+        .light-beam:nth-child(1) {
+            top: -100px;
+            left: 10%;
+        }
+
+        .light-beam:nth-child(2) {
+            bottom: -100px;
+            right: 15%;
+            transform: rotate(-45deg);
+            animation-delay: 2.5s;
+        }
+
+        .digital-circuit {
+            position: absolute;
+            width: 250px;
+            height: 250px;
+            background: radial-gradient(circle at center, transparent 30%, rgba(0, 255, 255, 0.03) 30.5%, transparent 31%, transparent 34%, rgba(0, 255, 255, 0.03) 34.5%, transparent 35%),
+            linear-gradient(rgba(0, 255, 255, 0.07) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(0, 255, 255, 0.07) 1px, transparent 1px);
+            background-size: 100% 100%, 25px 25px, 25px 25px;
+            z-index: -1;
+        }
+
+        .digital-circuit:nth-child(1) {
+            top: 10%;
+            right: 5%;
+            transform: rotate(15deg);
+        }
+
+        .digital-circuit:nth-child(2) {
+            bottom: 5%;
+            left: 7%;
+            transform: rotate(-10deg);
+        }
+
+        /* --- Mouse reactive elements --- */
+        .mouse-spotlight {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0, 255, 255, 0.5) 0%, rgba(0, 255, 255, 0) 70%);
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.9;
+            filter: blur(40px);
+            mix-blend-mode: screen;
+            transition: background 0.2s ease;
+        }
+
+        /* Mouse reactive ripple effect */
+        .ripple-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            transform: scale(0);
+            opacity: 0.5;
+            background: transparent;
+            border: 2px solid rgba(0, 255, 255, 0.5);
+            pointer-events: none;
+            animation: rippleEffect 1.5s ease-out;
+        }
+
+        @keyframes rippleEffect {
+            0% {
+                transform: scale(0);
+                opacity: 0.7;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 0;
+            }
+        }
+
+        /* --- Login Container --- */
+        .login-container {
+            width: 380px;
+            padding: 40px;
+            background: rgba(26, 26, 42, 0.7);
+            border-radius: 15px;
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
+            position: relative;
+            z-index: 2;
+            transition: box-shadow 0.3s ease;
+        }
+
+        /* Login container decorative corner */
+        .login-container::before,
+        .login-container::after {
+            content: "";
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            border-color: var(--primary-color);
+            opacity: 0.6;
+        }
+
+        .login-container::before {
+            top: 0;
+            left: 0;
+            border-top: 2px solid;
+            border-left: 2px solid;
+            border-radius: 10px 0 0 0;
+        }
+
+        .login-container::after {
+            bottom: 0;
+            right: 0;
+            border-bottom: 2px solid;
+            border-right: 2px solid;
+            border-radius: 0 0 10px 0;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: var(--primary-color);
+            font-size: 2rem;
+            font-weight: 600;
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--primary-color);
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1rem;
+            background: rgba(30, 30, 60, 0.8);
+            color: var(--text-color);
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(45deg, #3d5afe, #30cfd0);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 200, 255, 0.2);
+        }
+
+        button:hover {
+            box-shadow: 0 6px 15px rgba(0, 255, 255, 0.4);
+            transform: translateY(-2px);
+            filter: brightness(1.1);
+        }
+
+        button:active {
+            transform: translateY(0px);
+            box-shadow: 0 2px 5px rgba(0, 200, 255, 0.3);
+        }
+
+        .message {
+            margin-top: 20px;
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .message.success {
+            background-color: rgba(0, 255, 157, 0.2);
+            color: var(--success-color);
+            border: 1px solid rgba(0, 255, 157, 0.3);
+        }
+
+        .message.error {
+            background-color: rgba(255, 51, 102, 0.2);
+            color: var(--error-color);
+            border: 1px solid rgba(255, 51, 102, 0.3);
+        }
+
+        /* --- Color-changing background overlay --- */
+        .color-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            mix-blend-mode: overlay;
+            opacity: 0.4;
+        }
+
+        /* --- Responsive Design --- */
+        @media (max-width: 480px) {
+            .login-container {
+                width: 90%;
+                padding: 30px 20px;
+            }
+
+            h2 {
+                font-size: 1.8rem;
+            }
+
+            .form-group input {
+                padding: 12px;
+            }
+
+            button {
+                padding: 12px;
+            }
+        }
+    </style>
+</head>
+<body onload="login()">
+<!-- Color-changing overlay -->
+<div class="color-overlay"></div>
+
+<!-- Decorative background elements -->
+<div class="particles-container">
+    <div class="grid-overlay"></div>
+
+    <div class="decorative-circle"></div>
+    <div class="decorative-circle"></div>
+
+    <div class="hexagon"></div>
+    <div class="hexagon"></div>
+
+    <div class="light-beam"></div>
+    <div class="light-beam"></div>
+
+    <div class="digital-circuit"></div>
+    <div class="digital-circuit"></div>
+</div>
+
+<!-- Mouse-reactive spotlight -->
+<div class="mouse-spotlight"></div>
+
+<!-- Ripple effect container -->
+<div class="ripple-container"></div>
+
+<div class="login-container">
+    <h2>用户登录</h2>
+    <form id="loginForm" th:action="@{/loginForm}" method="post" onsubmit="return login()">
+        <div class="form-group">
+            <label for="account">账号:</label>
+            <input type="text" id="account" name="account" required>
+        </div>
+        <div class="form-group">
+            <label for="password">密码:</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+        <button type="submit">登录</button>
+    </form>
+    <div id="message" class="message"></div>
+</div>
+
+<script th:inline="javascript">
+    function login() {
+        return true;
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // Create floating particles
+        const particlesContainer = document.querySelector('.particles-container');
+        const particleCount = 30;
+
+        for (let i = 0; i < particleCount; i++) {
+            const particle = document.createElement('div');
+            particle.classList.add('particle');
+
+            // Random positioning and size
+            const size = Math.random() * 4 + 1;
+            const posX = Math.random() * window.innerWidth;
+            const posY = Math.random() * window.innerHeight;
+
+            // Set particle styles
+            particle.style.width = `${size}px`;
+            particle.style.height = `${size}px`;
+            particle.style.left = `${posX}px`;
+            particle.style.top = `${posY}px`;
+
+            // Animation properties
+            const duration = Math.random() * 20 + 10;
+            const delay = Math.random() * 5;
+
+            particle.style.animation = `floatAnimation ${duration}s ease-in-out ${delay}s infinite`;
+
+            particlesContainer.appendChild(particle);
+        }
+
+        // Handle mouse movement for spotlight and color effects
+        const mouseSpotlight = document.querySelector('.mouse-spotlight');
+        const colorOverlay = document.querySelector('.color-overlay');
+        const rippleContainer = document.querySelector('.ripple-container');
+        const loginContainer = document.querySelector('.login-container');
+
+        let lastRippleTime = 0;
+
+        // Function to update spotlight position and color
+        function handleMouseMove(e) {
+            const mouseX = e.clientX;
+            const mouseY = e.clientY;
+
+            // Position the spotlight at the mouse position
+            mouseSpotlight.style.left = `${mouseX - 300}px`;  // Center the spotlight on mouse
+            mouseSpotlight.style.top = `${mouseY - 300}px`;   // Center the spotlight on mouse
+
+            // Calculate dynamic color based on position
+            const hue = (mouseX / window.innerWidth) * 360; // Full color spectrum
+            const saturation = 80 + (mouseY / window.innerHeight) * 20; // Range from 80 to 100%
+            const lightness = 50 + Math.sin(Date.now() / 1000) * 10; // Pulsing effect
+
+            // Apply dynamic color to the spotlight with enhanced opacity
+            mouseSpotlight.style.background = `radial-gradient(circle, hsla(${hue}, ${saturation}%, ${lightness}%, 0.7) 0%, rgba(0, 255, 255, 0) 70%)`;
+
+            // Update full-screen color overlay
+            colorOverlay.style.background = `linear-gradient(${mouseY / 10}deg, hsla(${hue}, 100%, 50%, 0.3), hsla(${(hue + 60) % 360}, 100%, 50%, 0.3))`;
+
+            // Add subtle glow to login container based on mouse position
+            const distanceX = Math.abs((window.innerWidth / 2) - mouseX);
+            const distanceY = Math.abs((window.innerHeight / 2) - mouseY);
+            const distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
+            const maxDistance = Math.sqrt((window.innerWidth / 2) * (window.innerWidth / 2) +
+                (window.innerHeight / 2) * (window.innerHeight / 2));
+            const intensity = 1 - (distance / maxDistance);
+
+            loginContainer.style.boxShadow = `0 0 30px rgba(${Math.floor((1-intensity) * 255)}, ${Math.floor(intensity * 255)}, 255, 0.5)`;
+
+            // Create ripple effect occasionally
+            const now = Date.now();
+            if (now - lastRippleTime > 800) { // Limit ripple creation rate
+                createRipple(mouseX, mouseY, hue);
+                lastRippleTime = now;
+            }
+        }
+
+        // Create ripple effect
+        function createRipple(x, y, hue) {
+            const ripple = document.createElement('div');
+            ripple.classList.add('ripple');
+            ripple.style.left = `${x}px`;
+            ripple.style.top = `${y}px`;
+            ripple.style.width = '200px';
+            ripple.style.height = '200px';
+            ripple.style.marginLeft = '-100px';
+            ripple.style.marginTop = '-100px';
+            ripple.style.borderColor = `hsla(${hue}, 100%, 70%, 0.5)`;
+
+            rippleContainer.appendChild(ripple);
+
+            // Remove ripple after animation completes
+            setTimeout(() => {
+                ripple.remove();
+            }, 1500);
+        }
+
+        // Add occasional automatic ripples
+        function createRandomRipple() {
+            const x = Math.random() * window.innerWidth;
+            const y = Math.random() * window.innerHeight;
+            const hue = Math.random() * 360;
+
+            createRipple(x, y, hue);
+
+            // Schedule next ripple
+            setTimeout(createRandomRipple, Math.random() * 2000 + 1000);
+        }
+
+        // Update spotlight on mouse move
+        document.addEventListener('mousemove', handleMouseMove);
+
+        // Create ripples on click
+        document.addEventListener('click', function(e) {
+            const hue = (e.clientX / window.innerWidth) * 360;
+            createRipple(e.clientX, e.clientY, hue);
+        });
+
+        // Start with a centered glow for touch devices
+        if ('ontouchstart' in window) {
+            mouseSpotlight.style.left = '50%';
+            mouseSpotlight.style.top = '50%';
+            mouseSpotlight.style.transform = 'translate(-50%, -50%)';
+
+            // For touch devices, create random ripples
+            createRandomRipple();
+        } else {
+            // Trigger initial mouse position effect
+            const evt = new MouseEvent("mousemove", {
+                clientX: window.innerWidth / 2,
+                clientY: window.innerHeight / 2
+            });
+            document.dispatchEvent(evt);
+        }
+    });
+</script>
+</body>
+</html>
